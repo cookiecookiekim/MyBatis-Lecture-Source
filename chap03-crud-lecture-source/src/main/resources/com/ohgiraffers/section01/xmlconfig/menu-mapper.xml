@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- '매핑된 SQL 문 탐색' 위 4줄 -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+
+    <!-- comment. 우리가 JDBC를 사용해서 전체 조회 했을 때
+            수많은 코드(setter와 getter)를 이용하여 힘들게 객체 값을 집어 넣었다.
+            하지만, MyBatis는 JDBC를 더욱 간편하게 사용할 수 있게 해주는 프레임 워크이다.
+            이러한 하드 코딩 문제를 resultMap으로 해결 가능하다. -->
+
+    <!-- resultMap이란 결과를 매핑한다. : 데이터베이스에 컬럼에 해당하는 값과 필드값을 매칭시켜준다. -->
+    <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO"> <!-- id와 type 설정하기 -->
+        <!-- DB상에 PK는 ID로 표기 / DB상에 PK 이외엔 result로 표기 -->
+        <id property="menuCode" column="MENU_CODE"/> <!-- property : DTO의 필드 작성, column : DB상 컬럼 -->
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+
+    </resultMap>
+
+    <select id="selectAllMenu" resultMap="menuResultMap"> <!-- 위에 resultMap에 id를 두 번째 인서트로 삽입 -->
+        SELECT
+             MENU_CODE
+            ,MENU_NAME
+            ,MENU_PRICE
+            ,CATEGORY_CODE
+            ,ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        ORDER BY
+            MENU_CODE
+    </select>
+
+</mapper>

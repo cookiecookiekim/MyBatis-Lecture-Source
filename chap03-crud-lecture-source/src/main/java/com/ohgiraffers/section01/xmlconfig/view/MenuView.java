@@ -22,7 +22,7 @@ public class MenuView { // 24-10-07 5교시 mybatis - crud
 
         Scanner sc = new Scanner(System.in);
         MenuController menuController = new MenuController();
-
+        // menuController 선언과 동시에 MenuController 기본 생성자로 이동하여 this로 초기화 한다.
         do {
             // 사용자가 보는 화면이라고 생각하자.
             System.out.println("=================== HiMedia 메뉴 관리 시스템 ===================");
@@ -39,7 +39,6 @@ public class MenuView { // 24-10-07 5교시 mybatis - crud
                 case 1 :
                     menuController.selectAllMenu();
                     break;
-                case 2 :
             }
 
         } while (true);
