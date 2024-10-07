@@ -26,8 +26,5 @@
 
     </environments>
 
-    <mappers> <!-- javaconfig와 비교하면서 따라해보자 -->
-        <mapper resource="mapper.xml"/> <!-- class가 아닌 file 형태이기 때문에 resource -->
-    </mappers>
 
 </configuration>
