@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- xml 방식의 config -->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd"> <!-- mybatis 홈페이지에서 긁어옴 -->
+
+<configuration> <!-- configuration 치면 자동 생성 --> <!-- configuration에 환경 담기 완료 -->
+
+    <environments default="dev"> <!-- dev -->
+
+        <environment id="dev">
+
+            <transactionManager type="JDBC"></transactionManager> <!-- JDBC 입력 -->
+            <dataSource type="POOLED"> <!-- POOLED 입력 -->
+
+                <!-- 정보 입력 -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/> <!-- property 열고, (driver, com.mysql.cj.jdbc.Driver) 입력 -->
+                <property name="url" value="jdbc:mysql://localhost/menudb"/>
+                <property name="username" value="ohgiraffers"/>
+                <property name="password" value="ohgiraffers"/>
+
+            </dataSource>
+
+        </environment>
+        <!-- javaconfig에서 했던 addMapper 과정 -->
+
+    </environments>
+
+    <mappers> <!-- javaconfig와 비교하면서 따라해보자 -->
+        <mapper resource="mapper.xml"/> <!-- class가 아닌 file 형태이기 때문에 resource -->
+    </mappers>
+
+</configuration>

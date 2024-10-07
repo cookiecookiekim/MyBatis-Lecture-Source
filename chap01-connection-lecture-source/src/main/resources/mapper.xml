@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 쿼리문 작성 파일 --> <!-- '매핑된 SQL 문 탐색' 세 줄 복붙 -->
+
+<!-- mapper 방식으로 파일 구성 -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper 이름 등록하기 -->
+<mapper namespace="mapper"> <!-- mapper → namespace → mapper -->
+    <select id="selectSysDate" resultType="java.util.Date"> <!-- id, resultType 입력 -->
+    SELECT
+        CURDATE()
+    FROM
+        DUAL
+    </select>
+</mapper>

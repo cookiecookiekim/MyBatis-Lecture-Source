@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.33'  // mysql 커넥터(gradle short) 우선 추가 (8.0.33)
+
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis
+    implementation 'org.mybatis:mybatis:3.5.6'  // mybatis 커넥터(gradle short) 우선 추가 (3.5.6)
+    // → 해당 프로젝트에서 mybatis가 제공하는 클래스(기능) 사용 준비 완료했다는 의미
+}
+
+test {
+    useJUnitPlatform()
+}
