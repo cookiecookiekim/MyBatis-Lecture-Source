@@ -18,4 +18,24 @@ public class MenuDAO {
     // menu-mapper.xml파일 MenuMapper에 접근하여 selectAllMenu를 실행시키겠다.
         return sqlSession.selectList("MenuMapper.selectAllMenu");
     }
+
+    public MenuDTO selectMenuByMenuCode(SqlSession sqlSession, int code) {
+
+        // 쿼리문에 return sqlSession.selectOne("MenuMapper.selectMenuByMenuCode", code); 보내줌.
+        return sqlSession.selectOne("MenuMapper.selectMenuByMenuCode", code); // (미리 아이디값 설정, ★code★)
+        // 이후, menu-mapper.xml에 두 번째 쿼리문 작성
+    }
+
+    public int insertNewMenu(SqlSession sqlSession, MenuDTO newMenu) { // 제대로 insert 됐다면 정수값(1)을 반환하기 때문에 int로 변경
+        return sqlSession.insert("MenuMapper.insertNewMenu", newMenu);
+        // Mapper 파일에 insertNewMenu와 newMenu 전달.
+    }
+
+    public int updateMenu(SqlSession sqlSession, MenuDTO modifyMenu) {
+        return sqlSession.update("MenuMapper.updateMenu", modifyMenu);
+    }
+
+    public int deleteMenu(SqlSession sqlSession, MenuDTO deleteMenu) {
+        return  sqlSession.delete("MenuMapper.deleteMenu", deleteMenu);
+    }
 }

@@ -35,4 +35,44 @@
             MENU_CODE
     </select>
 
+    <!-- DAO, selectMenuByMenuCode 메서드 참고 -->
+    <select id="selectMenuByMenuCode" parameterType="_int" resultMap="menuResultMap">
+        SELECT  <!-- parameterType 입력 후, DTO에 보내줘야 하므로 위와 같이 바인딩 작업 필요 (resultMap 기입) -->
+             MENU_CODE
+            ,MENU_NAME
+            ,MENU_PRICE
+            ,CATEGORY_CODE
+            ,ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        AND
+            MENU_CODE = #{code}       <!-- #{변수명} 는 jdbc의 (placeholder) ? 와 같은 의미 -->
+    </select>
+    <!-- comment. insert, delete, update의 경우에는 DB에 영향을 미치게 되면 int형으로 결과 반환
+          또한 파라미터로 전달된 newMenu를 DTO의 필드명으로 값을 바인딩 해줘야 함.-->
+    <insert id="insertNewMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        INSERT INTO TBL_MENU                     <!-- MenuDTO 파일을 parameter(전달인자)로 받고 있다 -->
+        (MENU_NAME, MENU_PRICE, CATEGORY_CODE, ORDERABLE_STATUS)
+        VALUES
+        (#{menuName} , #{menuPrice} , #{categoryCode} , 'Y') <!-- DTO 전역번수 변수명과 동일하게 작성 -->
+                                    <!-- orderableStatus는 Y로 값을 고정 -->
+    </insert>
+
+    <update id="updateMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+         UPDATE TBL_MENU
+         SET
+         MENU_NAME = #{menuName}
+        ,MENU_PRICE = #{menuPrice}
+        ,CATEGORY_CODE = #{categoryCode}
+        WHERE
+        MENU_CODE = #{menuCode} <!-- 하나의 값만 수정할 거기 때문에 MENU_CODE 가 menuCode인 애들만 수정하겠다. -->
+    </update>
+    <delete id="deleteMenu" parameterType="com.ohgiraffers.section01.xmlconfig.model.dto.MenuDTO">
+        DELETE FROM TBL_MENU
+        WHERE
+        MENU_CODE = #{menuCode}
+
+    </delete>
 </mapper>

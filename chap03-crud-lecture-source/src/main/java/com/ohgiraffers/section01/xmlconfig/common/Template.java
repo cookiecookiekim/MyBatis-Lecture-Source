@@ -29,6 +29,4 @@ public class Template { // SqlSession 객체 만드는 클래스
         SqlSession sqlSession = sqlSessionFactory.openSession(false); // 세션을 만들겠다.
         return sqlSession;
     }
-
-
 }
