@@ -44,7 +44,24 @@ public class MenuService {
 
         mapper = sqlSession.getMapper(DynamicSqlMapper.class);
 
+        // 여러가지의 타입을 받을거기 때문에 List<MenuDTO>
         List<MenuDTO> menuList = mapper.searchMenu(searchCriteria); // 이번에는 1번과 다르게 class로 전달한 것
+        if (menuList != null && menuList.size() > 0) {
+            for (MenuDTO menu : menuList) {
+                System.out.println(menu);
+            }
+        } else {
+            System.out.println("검색 결과가 없습니다.");
+        }
+        sqlSession.close();
+    }
+
+    public void searchMenuBySupCategory(SearchCriteria searchCriteria) {
+        SqlSession sqlSession = getSqlSession();
+
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+        List<MenuDTO> menuList = mapper.searchMenuBySupCategory(searchCriteria);
+
         if (menuList != null && menuList.size() > 0) {
             for (MenuDTO menu : menuList) {
                 System.out.println(menu);

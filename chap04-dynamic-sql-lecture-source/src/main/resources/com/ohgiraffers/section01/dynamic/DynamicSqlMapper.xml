@@ -75,4 +75,37 @@
         ORDER BY A.MENU_CODE
     </select>
 
+    <!-- comment. <choose>(when/otherwise) 태크 : java의 switch-case문의 역할
+            <choose>
+                <when test="조건">
+                    쿼리문
+                </when>
+                ''' (when 구문이 많이 늘어날 수 있다는 뜻.)
+                <otherwise>
+                    쿼리문
+                </otherwise>
+            </choose>
+            test 속성에 부합하면 해당하는 when 구문의 쿼리 동작
+            어떠한 when 구문의 조건도 만족하지 않는다면 otherwise 구문의 쿼리 동작 -->
+    <select id="searchMenuBySupCategory" parameterType="com.ohgiraffers.common.SearchCriteria" resultMap="menuResultMap">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        <choose> <!-- 노션에서 전체 테이블 확인해가며 복습 -->
+            <when test="value == '식사'">
+                AND CATEGORY_CODE IN (1, 4, 5) <!-- 카테고리 코드가 1,4,5를 포함하고 있는지 -->
+            </when>
+            <when test="value == '음료'">
+                AND CATEGORY_CODE IN (2) <!-- 카테고리 코드가 2를 포함하고 있는지 -->
+            </when>
+            <otherwise>
+                AND CATEGORY_CODE IN (3) <!-- 식사, 음료를 제외하면 모두 디저트 -->
+            </otherwise>
+        </choose>
+        ORDER BY MENU_CODE
+    </select>
+
 </mapper>
