@@ -14,7 +14,7 @@ public class Application { // 24-10-07 (월) 3교시 mybatis(프레임워크) xm
                             // mybatis 홈페이지에 내용이 다 나와있음.
     public static void main(String[] args) {
 
-        String resource = "mybatis-config.xml";
+        String resource = "mybatis-config.xml"; // 파일명
         InputStream inputStream = null;
 
         try {
@@ -29,7 +29,7 @@ public class Application { // 24-10-07 (월) 3교시 mybatis(프레임워크) xm
 
             SqlSession session = sqlSessionFactory.openSession(false); // session 만들기
 
-            Date date = session.selectOne("mapper.selectSysDate");
+            Date date = session.selectOne("mapper.selectSysDate"); //mapper.xml파일
 
             System.out.println("date = " + date);
 

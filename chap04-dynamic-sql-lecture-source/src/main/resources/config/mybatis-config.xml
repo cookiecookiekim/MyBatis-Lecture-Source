@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration> <!-- 환경 조성 -->
+
+    <properties resource="config/connection-info.properties"/> <!-- 경로 지정, properties 파일을 읽을 수 있게 되었음. -->
+
+    <typeAliases> <!-- 별칭 설정 가능 -->
+        <typeAlias type="com.ohgiraffers.common.MenuDTO" alias="MenuDTO"/> <!-- MenuDTO라는 별칭으로 사용하겠다. -->
+    </typeAliases>
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"></transactionManager>
+
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/> <!-- property 태그 추가, value는 properties 파일의 driver key 값 설정 -->
+                <property name="url" value="${url}"/> <!-- value에 보통 민감한 정보를 작성한다. -->
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+
+        </environment>
+    </environments>
+    <mappers> <!-- package 형식으로도 작성할 수 있음, 장점 : 경로 입력하면 하위에 있는 파일은 알아서 등록이 된다.(mapper를 각각 입력 안 해도 됨) -->
+        <package name="com.ohgiraffers.section01.dynamic"/>
+    </mappers>
+
+</configuration>

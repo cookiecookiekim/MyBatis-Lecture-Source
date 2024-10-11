@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ohgiraffers.section01.dynamic.DynamicSqlMapper"> <!-- DynamicSqlMapper 파일 풀 경로 입력 (일치) -->
+    <!-- comment. 조건절 작성 : 넘겨받은 price가 0 ~ 10,000원 사이일 때, 10,000 ~ 20,000원 사이일 때,
+                20,000 ~ 30,000원 사이일 때, 30,000원 초과일 때 -->
+
+    <!-- comment. <if> 테크 : test 속성의 조건에 해당할 때만 엘리먼트 구문을 쿼리에 추가
+            또다른 테그 : gte(크거나 같음), gt(보다 큼), lte(작거나 같음), lt(보다 작음) 등등
+            <![CDATA[문장]]> 문장에 해당하는 공간에서는 부등호 표현이 자유롭다. -->
+
+    <!-- comment. 별칭 설정도 config 파일에서 할 수 있다. -->
+    <resultMap id="menuResultMap" type="MenuDTO"> <!-- mybatis-config.xml 파일에서 <typeAliases> MenuDTO 로 별칭 설정 했으므로
+                                                    풀네임이 아닌 MenuDTO로 작성-->
+        <id property="code" column="MENU_CODE"/>
+        <result property="name" column="MENU_NAME"/>
+        <result property="price" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+
+    </resultMap>
+
+    <select id="selectMenuByPrice" parameterType="hashmap" resultMap="menuResultMap">
+            <!-- map으로 보내므로 parameterType도 hashmap으로 -->
+        SELECT
+             MENU_CODE
+            ,MENU_NAME
+            ,MENU_PRICE
+            ,CATEGORY_CODE
+            ,ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        <if test="price gte 0 and price lte 10000"> <!-- price가 0보다 크거나 같거나 price가 10000보다 작거나 같음 -->
+             <![CDATA[
+             AND MENU_PRICE < #{price}
+             ]]>
+        </if>
+        <if test="price gt 10000 and price lte 20000">
+            AND MENU_PRICE BETWEEN 10000 AND #{price} <!-- 사이 값 작성 시 BETWEEN 작성 가능하다. -->
+        </if>
+        <if test="price gt 20000 and price lte 30000">
+            AND MENU_PRICE BETWEEN 20000 AND #{price} <!-- 사이 값 작성 시 BETWEEN 작성 가능하다. -->
+        </if>
+        <if test="price gt 30000">
+            AND MENU_PRICE BETWEEN 30000 AND #{price} <!-- 사이 값 작성 시 BETWEEN 작성 가능하다. -->
+        </if>
+        ORDER BY MENU_CODE
+    </select>
+
+    <!-- condition이라는 변수에 메뉴와 카테고리를 입력할 수 있는데,
+        메뉴로 선택을 하면 join할 필요 없이, 검색어에 해당하는 메뉴 조회
+        condition이라는 변수에 카테고리로 선택을 하면 join해서 카테고리 명에 해당하는 메뉴 조회 -->
+    <select id="searchMenu" parameterType="com.ohgiraffers.common.SearchCriteria" resultMap="menuResultMap">
+        SELECT
+             A.MENU_CODE
+            ,A.MENU_NAME
+            ,A.CATEGORY_CODE
+            ,A.ORDERABLE_STATUS
+        FROM
+             TBL_MENU A
+        <if test="condition == 'category'"> <!-- category일 경우에만 실행 -->
+            JOIN TBL_CATEGORY B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)
+        </if>
+        WHERE A.ORDERABLE_STATUS = 'Y'
+        <if test="condition == 'menuName'"> <!-- menuName일 경우에만 실행 -->
+            AND A.MENU_NAME LIKE CONCAT('%', #{value}, '%')
+        </if>
+        <if test="condition == 'category'"> <!-- category일 경우에만 실행 -->
+            AND B.CATEGORY_NAME = #{value}
+        </if>
+        ORDER BY A.MENU_CODE
+    </select>
+
+</mapper>
