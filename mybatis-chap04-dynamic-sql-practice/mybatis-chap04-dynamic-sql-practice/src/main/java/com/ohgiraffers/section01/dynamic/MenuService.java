@@ -3,20 +3,39 @@ package com.ohgiraffers.section01.dynamic;
 import com.ohgiraffers.common.MenuDTO;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.ohgiraffers.common.Template.getSqlSession;
 
 public class MenuService {
 
-    public DynamicSqlMapper mapper;
+    private DynamicSqlMapper mapper;
 
-    public void serviceIfSelect(int result) {
+    public void selectMenuByPrice (int price) {
         SqlSession sqlSession = getSqlSession();
 
         mapper = sqlSession.getMapper(DynamicSqlMapper.class);
 
-        List<MenuDTO> menuList = mapper.daoIfSelect(result);
+        Map<String, Integer> result = new HashMap<>();
+        result.put("price", price);
 
+        List<MenuDTO> menuList = mapper.ifSelect(result);
+        if (menuList != null && menuList.size() > 0) {
+            for (MenuDTO list : menuList) {
+                System.out.println(list);
+            }
+        }
+
+        sqlSession.close();
     }
+
 }
+
+
+
+
+
+
+

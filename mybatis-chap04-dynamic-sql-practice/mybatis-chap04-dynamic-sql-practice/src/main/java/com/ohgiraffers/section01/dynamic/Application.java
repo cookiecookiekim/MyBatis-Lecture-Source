@@ -23,10 +23,9 @@ public class Application {
 
         } while (true);
     }
-    private static void selectIf() {
+    private static void selectIf () {
         MenuService menuService = new MenuService();
         Scanner sc = new Scanner(System.in);
-
         do {
             System.out.println("============ if 서브 메뉴 ============");
             System.out.println("1. 원하는 금액 대 적합한 추천 메뉴 목록 보여주기");
@@ -36,15 +35,18 @@ public class Application {
             int no = sc.nextInt();
 
             switch (no) {
-                case 1 : menuService.serviceIfSelect(maxPrice()); break;
+                case 1 :
+                    menuService.selectMenuByPrice(inputPrice()); break;
+                case 9 :
+                    System.out.println("if 서브메뉴 종료"); return; // 자신을 호출한 app로 돌아감.
             }
         } while (true);
     }
-
-    private static int maxPrice() {
+    private static int inputPrice() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("최대 금액을 입력하세요 : ");
+        System.out.print("검색하실 가격의 최대 금액을 입력해 주세요 : ");
         int price = sc.nextInt();
+
         return price;
     }
 }
