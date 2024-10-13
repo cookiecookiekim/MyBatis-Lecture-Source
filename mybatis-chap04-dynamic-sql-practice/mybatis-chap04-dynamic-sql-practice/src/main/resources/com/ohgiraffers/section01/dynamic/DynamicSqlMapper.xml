@@ -1,30 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<configuration>
+<mapper namespace="com.ohgiraffers.section01.dynamic.DynamicSqlMapper">
 
-    <properties resource="config/connection-info.properties"/>
+    <resultMap id="resultMap" type="MenuDTO">
+        <id property="code" column="MENU_CODE"/>
+        <result property="name" column="MENU_NAME"/>
+        <result property="price" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
 
-    <typeAliases>
-        <typeAlias type="com.ohgiraffers.common.MenuDTO" alias="MenuDTO"/>
-    </typeAliases>
+    <select id="ifSelectMaxPrice" parameterType="hashmap" resultMap="resultMap" resultType="MenuDTO">
+        SELECT
+              MENU_CODE
+             ,MENU_NAME
+             ,MENU_PRICE
+             ,CATEGORY_CODE
+             ,ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        <if test="price gte 0 and price lt 10000">
+            <![CDATA[
+            AND MENU_PRICE < #{price}
+            ]]>
+        </if>
+        <if test="price gt 10000 and price lte 20000">
+            AND MENU_PRICE BETWEEN 10000 AND #{price}
+        </if>
+        <if test="price gt 20000 and price lte 30000">
+            AND MENU_PRICE BETWEEN 20000 AND #{price}
+        </if>
+        <if test="price gt 30000">
+            AND MENU_PRICE BETWEEN 30000 AND #{price}
+        </if>
+        ORDER BY MENU_CODE
+    </select>
 
-    <environments default="dev">
-        <environment id="dev">
-            <transactionManager type="JDBC"></transactionManager>
-            <dataSource type="POOLED">
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${url}"/>
-                <property name="username" value="${username}"/>
-                <property name="password" value="${password}"/>
-            </dataSource>
-        </environment>
-    </environments>
-
+    <select id="ifSelectNameCategory" parameterType="com.ohgiraffers.common.SearchCriteria" resultMap="resultMap" resultType="MenuDTO">
+        SELECT
+             A.MENU_CODE
+            ,A.MENU_NAME
+            ,A.CATEGORY_CODE
+            ,A.ORDERABLE_STATUS
+        FROM
+            TBL_MENU A
+        <if test="condition == 'category'">
+            JOIN
+            TBL_CATEGORY B ON (A.CATEGORY_CODE = B.CATEGORY_CODE)
+        </if>
+        WHERE
+            A.ORDERABLE_STATUS = 'Y'
+        <if test="condition == 'menuName'">
+            AND A.MENU_NAME LIKE CONCAT ('%' , #{value} , '%')
+        </if>
+        <if test="condition == 'category'">
+            AND B.CATEGORY_NAME = #{value}
+        </if>
+        ORDER BY A.MENU_CODE
+    </select>
     
-    <mappers>
-        <package name="com.ohgiraffers.section01.dynamic"/>
-    </mappers>
-</configuration>
+    <select id="chooseSupCategory" parameterType="hashmap" resultType="MenuDTO" resultMap="resultMap">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        <choose>
+            <when test="value.equals('식사')">
+                AND CATEGORY_CODE IN (1 , 4 , 5 , 6 , 7)
+            </when>
+            <when test="value == '음료'">
+                AND CATEGORY_CODE IN (8 , 9 , 10)
+            </when>
+            <otherwise>
+                AND CATEGORY_CODE IN (2 , 3)
+            </otherwise>
+        </choose>
+        ORDER BY MENU_CODE
+    </select>
+</mapper>
