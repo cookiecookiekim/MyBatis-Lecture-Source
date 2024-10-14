@@ -15,5 +15,7 @@ public interface DynamicSqlMapper { // DAO 역할
 
     List<MenuDTO> searchMenuBySupCategory(SearchCriteria searchCriteria);
 
+    List<MenuDTO> searchMenuByRandomCode(Map<String, List<Integer>> criteria);
+
 
 }
