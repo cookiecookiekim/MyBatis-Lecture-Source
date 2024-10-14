@@ -130,7 +130,6 @@
         <foreach collection="randomCodeList" item="byunsu" open="(" close=")" separator=",">
             #{byunsu}
         </foreach>
-
     </select>
 
     <!-- 검색 조건이 없으면 전체 조회, 있으면 menuCode로 조회 -->
@@ -203,12 +202,30 @@
 <!--        WHERE-->
 <!--            MENU_CODE = #{code}-->
 
+        <!-- <set> 엘리먼트는 set을 붙여주고 구분자(,)를 제거해주는 역할을 한다. -->
         UPDATE TBL_MENU
-        <if test="name != null and name != ''">
-            SET MENU_NAME = #{name}
+<!--        <set>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                MENU_NAME = #{name}-->
+<!--            </if>-->
+<!--            <if test="categoryCode != null and categoryCode gt 0">-->
+<!--                , CATEGORY_CODE = #{categoryCode}-->
+<!--            </if>-->
+<!--            <if test="orderableStatus != null and orderableStatus != ''">-->
+<!--                , ORDERABLE_STATUS = #{orderableStatus}-->
+<!--            </if>-->
+<!--        </set>-->
+        <trim prefix="SET" prefixOverrides=","> <!-- 위 내용을 trim 방식으로 표현 해보기-->
+            <if test="name != null and name != ''">
+                MENU_NAME = #{name}
+            </if>
             <if test="categoryCode != null and categoryCode gt 0">
                 , CATEGORY_CODE = #{categoryCode}
             </if>
-        </if>
+            <if test="orderableStatus != null and orderableStatus != ''">
+                , ODERABLE_STATUS = #{orderableStatus}
+            </if>
+        </trim>
+        WHERE MENU_CODE = #{code}
     </update>
 </mapper>
