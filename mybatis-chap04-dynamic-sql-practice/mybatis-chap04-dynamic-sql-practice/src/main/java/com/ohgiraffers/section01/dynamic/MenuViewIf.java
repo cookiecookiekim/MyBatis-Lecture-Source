@@ -11,6 +11,7 @@ public class MenuViewIf {
             System.out.println("=============mybatis 동적 확인 연습================");
             System.out.println("1. if 확인하기");
             System.out.println("2. choose(when , otherwise) 확인하기");
+            System.out.println("3. foreach 확인하기");
             System.out.println("9. 종료하기");
             System.out.print("메뉴를 선택해 주세요 : ");
             int no = sc.nextInt();
@@ -18,6 +19,7 @@ public class MenuViewIf {
             switch (no) {
                 case 1 : selectIf(); break;
                 case 2 : selectChoose(); break;
+                case 3 : foreachSelect(); break;
                 case 9 : return;
             }
 
@@ -56,6 +58,21 @@ public class MenuViewIf {
             case 1 : menuController.chooseSupCategory(); break;
             case 9 : return;
         }
+    }
 
+    private static void foreachSelect() {
+        Scanner sc = new Scanner(System.in);
+        MenuController menuController = new MenuController();
+        do {
+            System.out.println("=================== foreach 서브 메뉴 ===================");
+            System.out.println("1. 랜덤한 메뉴 5개 추출해서 조회하기");
+            System.out.println("9. 이전 메뉴로 돌아가기");
+            System.out.print("원하시는 메뉴를 선택해 주세요 : ");
+            int no = sc.nextInt();
+
+            switch (no) {
+                case 1 : menuController.foreachSelect(); break;
+            }
+        } while(true);
     }
 }

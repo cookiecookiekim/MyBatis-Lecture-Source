@@ -3,10 +3,7 @@ package com.ohgiraffers.section01.dynamic;
 import com.ohgiraffers.common.MenuDTO;
 import com.ohgiraffers.common.SearchCriteria;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuController {
 
@@ -51,6 +48,20 @@ public class MenuController {
             printResult.errorCode("errorChooseCategory");
         }
 
+    }
+
+    public void foreachSelect() {
+
+        Set<Integer> set = new HashSet<>();
+        while (set.size() < 6) {
+            int temp = ((int)(Math.random() * 30) + 1);
+            set.add(temp);
+        }
+        List<Integer> list = new ArrayList<>();
+
+        list.
+
+        menuService.foreachService();
     }
 }
 
