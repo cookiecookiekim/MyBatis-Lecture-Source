@@ -84,4 +84,36 @@
         </choose>
         ORDER BY MENU_CODE
     </select>
+
+    <select id="foreachSelectMapper" parameterType="hashmap" resultMap="resultMap" resultType="MenuDTO">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        AND CATEGORY_CODE IN
+        <foreach collection="key" item="show" open="(" close=")" separator=",">
+          #{show}
+        </foreach>
+
+    </select>
+    <select id="searchMenuCode" resultType="MenuDTO" resultMap="resultMap" parameterType="Search">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+        <if test="condition != null and condition.equals('menuCode')">
+<!--        <if test="value != null"> 요롷게만 해도 이상 없음 -->
+            <where>
+                MENU_CODE = #{value}
+            </where>
+        </if>
+    </select>
+    <select id="searchNameCategoryBoth" parameterType="hashmap" resultMap="resultMap" resultType="MenuDTO">
+        SELECT
+            *
+        FROM
+            TBL_MENU
+    </select>
 </mapper>

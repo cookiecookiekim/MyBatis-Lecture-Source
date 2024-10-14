@@ -53,15 +53,66 @@ public class MenuController {
     public void foreachSelect() {
 
         Set<Integer> set = new HashSet<>();
-        while (set.size() < 6) {
-            int temp = ((int)(Math.random() * 30) + 1);
-            set.add(temp);
+        while (set.size() < 5) {
+            int result = ((int)(Math.random()* 30 + 1));
+            set.add(result);
+            System.out.println(set);
         }
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>(set);
 
-        list.
+        Map<String , List<Integer>> map = new HashMap<>();
+        map.put("key", list);
+        menuService.foreachSelect(map);
+    }
 
-        menuService.foreachService();
+    public void controllerSearchMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색 조건을 입력하시겠습니까? (예 or 아니오) : ");
+
+        boolean yesOrNo = "예".equals(sc.nextLine()) ? true : false;
+
+        SearchCriteria searchCriteria = new SearchCriteria();
+
+        if (yesOrNo) {
+            System.out.print("검색할 메뉴 코드를 입력해 주세요 : ");
+            String menuCode = sc.nextLine();
+            searchCriteria.setCondition("menuCode");
+            searchCriteria.setValue(menuCode);
+        }
+
+        System.out.println("확인 0");
+        menuService.searchMenuCode(searchCriteria);
+
+    }
+
+    public void controllerSearchBoth() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색 조건(category or name or both or null) : "); // 여러 상황 연습
+        String value = sc.nextLine();
+
+        Map<String , Object> map = new HashMap<>();
+
+        if ("category".equals(value)) {
+            System.out.print("검색할 카테고리 코드를 입력해 주세요 : ");
+            int categoryCode = sc.nextInt();
+            map.put("categoryCode", categoryCode);
+
+        } else if ("name".equals(value)) {
+            System.out.print("검색할 메뉴 이름을 입력해 주세요 : ");
+            String menuName = sc.nextLine();
+            map.put("menuName", menuName);
+
+        } else if ("both".equals(value)) {
+            System.out.print("검색할 카테고리 코드를 입력해 주세요 : ");
+            int categoryCode = sc.nextInt();
+            System.out.print("검색할 메뉴 이름을 입력해 주세요 : ");
+            String menuName = sc.nextLine();
+
+            map.put("categoryCode", categoryCode);
+            map.put("menuName", menuName);
+
+            menuService.searchNameCategoryBoth(map);
+        }
     }
 }
 

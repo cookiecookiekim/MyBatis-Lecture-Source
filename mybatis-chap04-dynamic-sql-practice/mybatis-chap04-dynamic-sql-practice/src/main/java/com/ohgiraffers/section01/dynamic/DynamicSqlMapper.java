@@ -14,4 +14,10 @@ public interface DynamicSqlMapper {
 
     List<MenuDTO> chooseSupCategory(SearchCriteria searchCriteria);
 
+    List<MenuDTO> foreachSelectMapper(Map<String, List<Integer>> map);
+
+    List<MenuDTO> searchMenuCode(SearchCriteria searchCriteria);
+
+    List<MenuDTO> searchNameCategoryBoth(Map<String, Object> map);
+
 }

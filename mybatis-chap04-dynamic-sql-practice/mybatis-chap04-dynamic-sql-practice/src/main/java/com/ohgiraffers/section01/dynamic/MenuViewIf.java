@@ -12,6 +12,7 @@ public class MenuViewIf {
             System.out.println("1. if 확인하기");
             System.out.println("2. choose(when , otherwise) 확인하기");
             System.out.println("3. foreach 확인하기");
+            System.out.println("4. trim 확인하기");
             System.out.println("9. 종료하기");
             System.out.print("메뉴를 선택해 주세요 : ");
             int no = sc.nextInt();
@@ -20,6 +21,7 @@ public class MenuViewIf {
                 case 1 : selectIf(); break;
                 case 2 : selectChoose(); break;
                 case 3 : foreachSelect(); break;
+                case 4 : trimSelect(); break;
                 case 9 : return;
             }
 
@@ -74,5 +76,27 @@ public class MenuViewIf {
                 case 1 : menuController.foreachSelect(); break;
             }
         } while(true);
+    }
+
+    private static void trimSelect () {
+        Scanner sc = new Scanner(System.in);
+        MenuController menuController = new MenuController();
+        do {
+
+            System.out.println("================ trim 서브 메뉴 ================");
+            System.out.println("1. 검색 조건이 있는 경우 메뉴 코드로 조회, 단 없으면 전체 조회");
+            System.out.println("2. 메뉴 혹은 카테고리 코드로 검색, 단 메뉴와 카테고리 둘 다 일치하는 경우도 검색, 검색 조건 없으면 전체 검색");
+            System.out.println("3. 원하는 메뉴 정보만 수정하기");
+            System.out.println("9. 이전 메뉴로 돌아가기");
+            System.out.print("원하시는 메뉴를 선택해 주세요 : ");
+            int no = sc.nextInt();
+
+            switch (no) {
+                case 1 : menuController.controllerSearchMenu(); break;
+                case 2 : menuController.controllerSearchBoth(); break;
+            }
+
+        } while(true);
+
     }
 }
