@@ -43,6 +43,8 @@ public class Application { // 24-10-15 (화) 1교시 - view, controller는 건�
 
             switch (no) {
                 case 1 : elementService.selectResultMapTest(); break;
+                case 2 : elementService.selectResultMapConstructor(); break;
+                case 3 : elementService.selectResultMapAssociation(); break;
                 case 9 : return;
             }
         } while(true);

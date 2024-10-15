@@ -1,7 +1,10 @@
 package com.ohgiraffers.section01.xmlmapper;
 
+import com.ohgiraffers.common.MenuAndCategoryDTO;
+import com.ohgiraffers.common.MenuDTO;
 import org.apache.ibatis.session.SqlSession;
 
+import java.awt.*;
 import java.util.List;
 
 import static com.ohgiraffers.common.Template.getSqlSession;
@@ -36,7 +39,35 @@ public class ElementService { // 24-10-15 Service
         SqlSession sqlSession = getSqlSession();
 
         mapper = sqlSession.getMapper(ElementMapper.class);
-        List<String> list = mapper.asdadadasdasd();
+        List<MenuDTO> menuList = mapper.selectResultMapTest();
+
+            for (MenuDTO menu : menuList) {
+                System.out.println(menu);
+            }
+
+        sqlSession.close();
+    }
+
+    public void selectResultMapConstructor() { // db에서 꺼내온 값을 생성자를 통해 mapping 한다
+        SqlSession sqlSession = getSqlSession();
+        mapper = sqlSession.getMapper(ElementMapper.class);
+        List<MenuDTO> menuList = mapper.selectResultMapConstructor();
+
+        for (MenuDTO menu : menuList) {
+            System.out.println(menu);
+        }
+        sqlSession.close();
+    }
+
+    public void selectResultMapAssociation() {
+        SqlSession sqlSession = getSqlSession();
+
+        mapper = sqlSession.getMapper(ElementMapper.class);
+
+        List<MenuAndCategoryDTO> menuList = mapper.selectResultMapAssociationTest();
+        for (MenuAndCategoryDTO menu : menuList) {
+            System.out.println(menu);
+        }
 
         sqlSession.close();
     }
