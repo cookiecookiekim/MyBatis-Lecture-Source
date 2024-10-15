@@ -94,6 +94,7 @@ public class MenuViewIf {
             switch (no) {
                 case 1 : menuController.controllerSearchMenu(); break;
                 case 2 : menuController.controllerSearchBoth(); break;
+                case 3 : menuController.controllerWantChangeInfo(); break;
             }
 
         } while(true);

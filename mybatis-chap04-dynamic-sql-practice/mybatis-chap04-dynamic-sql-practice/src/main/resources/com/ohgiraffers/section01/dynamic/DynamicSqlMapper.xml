@@ -104,7 +104,6 @@
         FROM
             TBL_MENU
         <if test="condition != null and condition.equals('menuCode')">
-<!--        <if test="value != null"> 요롷게만 해도 이상 없음 -->
             <where>
                 MENU_CODE = #{value}
             </where>
@@ -116,4 +115,22 @@
         FROM
             TBL_MENU
     </select>
+
+    <select id="modifiWantChangeInfo" resultMap="resultMap" parameterType="hashmap" resultType="MenuDTO">
+        UPDATE TBL_MENU
+        <trim prefix="SET" prefixOverrides=",">
+              <if test="name != null and 'name' != ''">
+                , MENU_NAME = #{name}
+            </if>
+            <if test="categoryCode != null and 'categortCode' gt 0">
+                , CATEGORY_CODE = #{categoryCode}
+            </if>
+            <if test="orderableStatus != null and 'orderablaStatus' != ''">
+                , ORDERABLE_STATUS = #{orderablsStatus}
+            </if>
+        </trim>
+        WHERE MENU_CODE = #{code}
+    </select>
+
 </mapper>
+        <!--        <if test="value != null"> 요롷게만 해도 이상 없음 -->

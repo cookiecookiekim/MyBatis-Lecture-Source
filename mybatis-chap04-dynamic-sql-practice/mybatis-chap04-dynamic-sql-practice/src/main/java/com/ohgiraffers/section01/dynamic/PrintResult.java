@@ -35,6 +35,8 @@ public class PrintResult {
                 errorCode = "검색 조건에 맞는 메뉴 조회에 실패하였습니다."; break;
             case "errorSearchBoth" :
                 errorCode = "조건에 맞는 메뉴 이름 / 코드 조회에 실패하였습니다."; break;
+            case "errorModify" :
+                errorCode = "수정에 실패하였습니다."; break;
         }
         System.out.println(errorCode);
     }
@@ -66,6 +68,9 @@ public class PrintResult {
         for (MenuDTO menuDTO : menuList) {
             System.out.println(menuDTO);
         }
+    }
 
+    public void printModify() {
+        System.out.println("수정이 완료되었습니다.");
     }
 }

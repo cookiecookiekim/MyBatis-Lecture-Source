@@ -99,6 +99,22 @@ public class MenuService {
 
         sqlSession.close();
     }
+
+    public void serviceWantChangeInfo(Map<String, Object> map) {
+        SqlSession sqlSession = getSqlSession();
+
+        mapper = sqlSession.getMapper(DynamicSqlMapper.class);
+
+        int result = mapper.modifiWantChangeInfo(map);
+
+        if (result > 0) {
+            sqlSession.commit();
+            printResult.printModify();
+        } else {
+            sqlSession.rollback();
+            printResult.errorCode("errorModify");
+        }
+    }
 }
 
 

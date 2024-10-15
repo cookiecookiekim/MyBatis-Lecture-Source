@@ -114,6 +114,29 @@ public class MenuController {
             menuService.searchNameCategoryBoth(map);
         }
     }
+
+    public void controllerWantChangeInfo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경할 메뉴 코드를 입력해 주세요 : ");
+        int code = sc.nextInt();
+        System.out.print("변경할 메뉴 이름을 입력해 주세요 : ");
+        sc.nextLine();
+        String name = sc.nextLine();
+        System.out.print("변경할 카테고리 코드를 입력해 주세요 : ");
+        int categoryCode = sc.nextInt();
+        System.out.print("판매 여부를 결정해 주세요 (Y/N) : ");
+        sc.nextLine();
+        String orderableStatus = sc.nextLine();
+
+        Map<String, Object> map = new HashMap();
+        map.put("code", code);
+        map.put("name" , name);
+        map.put("categoryCode",categoryCode);
+        map.put("orderableStatus", orderableStatus);
+        menuService.serviceWantChangeInfo(map);
+
+
+    }
 }
 
 

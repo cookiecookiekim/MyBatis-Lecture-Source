@@ -20,4 +20,5 @@ public interface DynamicSqlMapper {
 
     List<MenuDTO> searchNameCategoryBoth(Map<String, Object> map);
 
+    int modifiWantChangeInfo(Map<String, Object> map);
 }
