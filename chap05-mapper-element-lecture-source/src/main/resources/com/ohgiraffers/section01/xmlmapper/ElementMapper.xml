@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ohgiraffers.section01.xmlmapper.ElementMapper">
+    <!-- comment. Mapper.xml 파일에서 사용할 수 있는 태그 엘리먼트는 총 9가지
+            <cache> , <cache-ref> , <resultMap> , <parameterMap> , <sql>
+          , <select> , <insert> , <update> , <delete> -->
+
+    <!-- comment. (외울 필요 없고 이해만 하기.)
+            (첫 조회 시 DB에 다녀오고 DATA를 캐시에 저장하는데,
+            이후 조회 시 DB에 다시 안 가고 캐시에 저장된 DATA를 꺼내 옴.)
+            - 캐시란? 데이터나 값을 미리 복사해둔 임시의 장소를 의미한다.
+            - 동일한 값을 DB에서 꺼내오는 과정을 생략하고 싶을 때 사용한다.
+            - 캐시 설정은 많이 반복될 작업에 적용하는 것이 효과적이다.
+            1. eviction : 캐시 알고리즘 (default 설정 → LRU)
+            2. flushInterval : 설정된 캐시를 얼마나 유지할 지 밀리초로 설정
+            3. size : 캐시에 저장될 객체의 수 (default 설정 → 1024)
+            4. readOnly : -->
+    <cache eviction="LRU" flushInterval="1000" size="512" readOnly="true">
+        <!-- mapper 파일의 cache 작업은 위에 한 줄이면 더 할 게 없음. -->
+
+    </cache>
+</mapper>
